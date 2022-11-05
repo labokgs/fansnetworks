@@ -25,4 +25,10 @@ class InquiryView(generic.FormView):
         logger.info('Inquiry sent by {}'.format(form.cleaned_data['name']))
         return super().form_valid(form)
 
+from diary.models import BookDiary
 
+
+def top(request):
+    diaries = BookDiary.objects.all()
+    context = {"diaries": diaries}
+    return render(request, "top.html", context)
