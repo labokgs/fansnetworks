@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Application definition
 
 INSTALLED_APPS = [
-    # "django.contrib.admin",
+    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -27,7 +27,10 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "allauth",
     "allauth.account",
+
     "django_bootstrap5",
+
+    'django_ses',
 ]
 
 
@@ -65,12 +68,7 @@ WSGI_APPLICATION = "fansnetworks.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+
 
 
 # Password validation
@@ -146,4 +144,7 @@ ACCOUNT_EMAIL_SUBJECT_PREFIX = ''
 
 DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL')
 
+
 MEDIA_URL = '/media/'
+
+LOGIN_REDIRECT_URL = 'diary:diary_list'
