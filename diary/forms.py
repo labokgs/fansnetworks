@@ -4,6 +4,9 @@ from django import forms
 from django.core.mail import EmailMessage
 
 from .models import Diary
+from django.forms import ModelForm
+
+
 
 
 class InquiryForm(forms.Form):
@@ -48,12 +51,23 @@ class InquiryForm(forms.Form):
         message = EmailMessage(subject=subject, body=message, from_email=form_email, to=to_list, cc=cc_list)
         message.send()
 
+
+class DateInput(forms.DateInput):
+    input_type = 'date'
+
 class DiaryCreateForm(forms.ModelForm):
     class Meta:
         model = Diary
-        fields = ('title', 'content', 'photo1', 'photo2', 'photo3')
+        fields = ('title', 'content', 'date', 'address', 'photo1', 'photo2', 'photo3')
+        widgets = {
+            'date': DateInput(),
+        }
 
         def __init__(self, *args,**kwargs):
             super().__init__(*args,**kwargs)
             for field in self.fields.values():
                 field.widget.attrs['class'] = 'form-control'
+
+
+
+

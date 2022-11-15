@@ -22,6 +22,28 @@
 
     <div class="row">
         <div class="col-3">
+            <strong>日付</strong>
+        </div>
+        <div class="col-9">
+            {{ object.date }}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-3">
+            <strong>住所</strong>
+        </div>
+        <div class="col-9">
+            {{ object.address }}
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="row">
+        <div class="col-3">
             <strong>本文</strong>
         </div>
         <div class="col-9">
@@ -35,20 +57,22 @@
         <div class="col-3">
             <strong>写真</strong>
         </div>
-        <div class="col-9">
-            {% if object.photo1 %}
-            <img class="choice_image" src="{{ object.photo1.url }}" width="300"/>
-            {% endif %}
-        </div>
-        <div class="col-9">
-            {% if object.photo2 %}
-            <img class="choice_image" src="{{ object.photo2.url }}" width="300"/>
-            {% endif %}
-        </div>
-        <div class="col-9">
-            {% if object.photo3 %}
-            <img class="choice_image" src="{{ object.photo3.url }}" width="300"/>
-            {% endif %}
+        <div class="photos">
+            <div class="col-9">
+                {% if object.photo1 %}
+                <img class="choice_image" src="{{ object.photo1.url }}" width="300"/>
+                {% endif %}
+            </div>
+            <div class="col-9">
+                {% if object.photo2 %}
+                <img class="choice_image" src="{{ object.photo2.url }}" width="300"/>
+                {% endif %}
+            </div>
+            <div class="col-9">
+                {% if object.photo3 %}
+                <img class="choice_image" src="{{ object.photo3.url }}" width="300"/>
+                {% endif %}
+            </div>
         </div>
     </div>
 
@@ -62,9 +86,9 @@
             {{ object.created_at }}
         </div>
     </div>
-
-    <hr>
-
+{% comment %} 
+    <hr> {% endcomment %}
+{% comment %} 
     <div class="row">
         <div class="col-3">
             <strong>更新日時</strong>
@@ -72,7 +96,8 @@
         <div class="col-9">
             {{ object.updated_at }}
         </div>
-    </div>
+    </div> {% endcomment %}
+    
     <a class="btn btn-success mt-5 mb-3" href="{% url 'diary:diary_update' object.pk %}">編集</a>
     <a class="btn btn-danger mt-5 ml-2 mb-3" href="{% url 'diary:diary_delete' object.pk %}">削除</a>
 </div>

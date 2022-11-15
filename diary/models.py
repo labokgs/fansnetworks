@@ -2,11 +2,17 @@ from accounts.models import CustomUser
 from django.db import models
 from django.conf import settings
 
+from  django.utils import timezone
+
 # Create your models here.
+
+
 
 class Diary(models.Model):
     user = models.ForeignKey(CustomUser, verbose_name='ユーザー', on_delete=models.PROTECT)
     title = models.CharField('タイトル',max_length= 40)
+    date = models.DateField(default=timezone.now)
+    address = models.CharField(verbose_name='住所', max_length=100)
     content = models.TextField(verbose_name='本文', blank= True, null= True)
     photo1 = models.ImageField(verbose_name='写真1', blank=True, null=True)
     photo2 = models.ImageField(verbose_name='写真2', blank=True, null=True)

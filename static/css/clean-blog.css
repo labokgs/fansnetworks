@@ -11246,3 +11246,12 @@ header.masthead .site-heading .h1 {
     font-size: 2.25rem;
   }
 }
+
+
+.article {
+  display: inline-block;
+}
+
+/* .photos {
+  display: flex;
+} */

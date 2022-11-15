@@ -30,7 +30,7 @@ INSTALLED_APPS = [
 
     "django_bootstrap5",
 
-    'django_ses',
+    # 'django_ses',
 ]
 
 
