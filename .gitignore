@@ -1,4 +1,8 @@
 /fansnetworks/local_settings.py
-
+db.sqlite3
 requirements.txt
 .env
+dump.json
+Procfile
+runtime.txt
+
