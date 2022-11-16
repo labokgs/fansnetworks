@@ -1,13 +1,23 @@
 from .settings_common import *
-# from .local_settings import *
+from .local_settings import *
+import os
 
-
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "NAME": "private_diary",
+        "USER": os.environ.get("DB_USER"),
+        "PASSWORD": os.environ.get("DB_PASSWORD"),
+        "HOST": "",
+        "PORT": "",
+    }
+}
 
 DEBUG = False
 
 try:
     # 存在する場合、ローカルの設定読み込み
-    # from .local_settings import *
+    from .local_settings import *
     from .settings_common import *
 except ImportError:
     pass
