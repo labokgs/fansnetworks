@@ -1,12 +1,14 @@
 from .settings_common import *
-from .local_settings import *
+# from .local_settings import *
+
 
 
 DEBUG = False
 
 try:
     # 存在する場合、ローカルの設定読み込み
-    from .local_settings import *
+    # from .local_settings import *
+    from .settings_common import *
 except ImportError:
     pass
 

@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from .local_settings import *
 
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
