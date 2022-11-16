@@ -22,7 +22,12 @@
         <!--My Style -->
         <link rel="stylesheet" type="text/css" href="{% static 'css/mystyle.css'%}">
 
-    
+        <!-- GoogleMapsAPI -->
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}" />
+        <script type="module" src="{% static 'js/index.js' %}"></script>
+        
         
         {% block head %}{% endblock %}
 
