@@ -1,7 +1,7 @@
 from .settings_common import *
 from .local_settings import *
 import os
-DEBUG = True
+
 
 DATABASES = {
     "default": {
