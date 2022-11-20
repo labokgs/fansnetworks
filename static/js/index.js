@@ -1,15 +1,16 @@
 // Initialize and add the map
+
 function initMap() {
-    // The location of Uluru
-    const uluru = { lat: -25.344, lng: 131.031 };
-    // The map, centered at Uluru
+    // The location of Tokyo tower
+    const tokyo_tower = { lat: 35.658584, lng: 139.7454316 };
+    // The map, centered at Tokyo tower
     const map = new google.maps.Map(document.getElementById("map"), {
       zoom: 4,
-      center: uluru,
+      center: tokyo_tower,
     });
-    // The marker, positioned at Uluru
+    // The marker, positioned at Tokyo tower
     const marker = new google.maps.Marker({
-      position: uluru,
+      position: tokyo_tower,
       map: map,
     });
   }

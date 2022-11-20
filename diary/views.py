@@ -12,6 +12,13 @@ from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from .models import Diary
 
+from django.http import HttpResponse
+from django.template import loader
+
+
+from django.views.decorators.clickjacking import xframe_options_exempt
+
+
 logger = logging.getLogger(__name__)
 
 class OnlyYouMixin(UserPassesTestMixin):
@@ -39,15 +46,18 @@ class InquiryView(generic.FormView):
 class DiaryListView(LoginRequiredMixin, generic.ListView):
     model = Diary
     template_name = 'diary_list.html'
-    paginate_by = 5
+    paginate_by = 4
 
     def get_queryset(self):
         diaries = Diary.objects.filter(user=self.request.user).order_by('-created_at')
         return diaries
 
+from django.utils.decorators import method_decorator
+@method_decorator(xframe_options_exempt,name="dispatch")
 class DiaryDetailView(LoginRequiredMixin, OnlyYouMixin, generic.DetailView):
     model = Diary
     template_name = 'diary_detail.html'
+    
 
 
 class DiaryCreateView(LoginRequiredMixin, generic.CreateView):
@@ -96,3 +106,9 @@ class DiaryDeleteView(LoginRequiredMixin, OnlyYouMixin, generic.DeleteView):
         return super().delete(request, *args,**kwargs)
 
 
+def MapDetail(request):
+    model = Diary
+    
+    template = loader.get_template("maps.html")
+    context = {}
+    return HttpResponse(template.render(context, request))

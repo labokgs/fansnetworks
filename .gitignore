@@ -4,3 +4,4 @@ db.sqlite3
 .env
 dump.json
 
+diary/templates/map_detail.html

@@ -2489,7 +2489,7 @@ textarea.form-control-lg {
      -moz-appearance: none;
           appearance: none;
   -webkit-print-color-adjust: exact;
-          accent-color: exact;
+          color-adjust: exact;
 }
 .form-check-input[type=checkbox] {
   border-radius: 0.25em;
@@ -11380,4 +11380,8 @@ header.masthead .bg-circle-4 {
   header.masthead .masthead-content .masthead-subheading {
     font-size: 4rem;
   }
+}
+
+.my-div-style {
+  margin-top: 6rem;
 }

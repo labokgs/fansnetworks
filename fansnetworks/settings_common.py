@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     "allauth.account",
 
     "django_bootstrap5",
-
+    "rest_framework",
     # 'django_ses',
 ]
 
@@ -147,5 +147,18 @@ DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL')
 
 
 MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media_local'
 
 LOGIN_REDIRECT_URL = 'diary:diary_list'
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
+XS_SHARING_ALLOWED_METHODS = ['POST','GET','OPTIONS', 'PUT', 'DELETE']
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

@@ -2,6 +2,8 @@
 {% load static %}
 
 
+{% static "css/mystyle.css" %}
+
 {% block title %}日記詳細 | Mr.WALKER{% endblock %}
 
 {% block active_diary_list %}active{% endblock %}
@@ -33,7 +35,12 @@
     <hr>
 
     <div class="row">
-        <iframe width="300" src="https://maps.google.co.jp/maps?q={{ object.address }}"></iframe>
+        <div class="col-3">
+            <strong>地図</strong>
+        </div>
+        <div class="col-9">
+            <iframe class="maps"  src="https://maps.google.co.jp/maps?q={{ object.address }}&output=embed&t=m"></iframe>
+        </div>
     </div>
 
     <hr>
@@ -53,22 +60,20 @@
         <div class="col-3">
             <strong>写真</strong>
         </div>
-        <div class="photos">
-            <div class="col-9">
-                {% if object.photo1 %}
-                <img class="choice_image" src="{{ object.photo1.url }}" width="300"/>
-                {% endif %}
-            </div>
-            <div class="col-9">
-                {% if object.photo2 %}
-                <img class="choice_image" src="{{ object.photo2.url }}" width="300"/>
-                {% endif %}
-            </div>
-            <div class="col-9">
-                {% if object.photo3 %}
-                <img class="choice_image" src="{{ object.photo3.url }}" width="300"/>
-                {% endif %}
-            </div>
+        <div class="col-9">
+            {% if object.photo1 %}
+            <img class="choice_image" src="{{ object.photo1.url }}" width="400"/>
+            {% endif %}
+        </div>
+        <div class="col-9">
+            {% if object.photo2 %}
+            <img class="choice_image" src="{{ object.photo2.url }}" width="300"/>
+            {% endif %}
+        </div>
+        <div class="col-9">
+            {% if object.photo3 %}
+            <img class="choice_image" src="{{ object.photo3.url }}" width="300"/>
+            {% endif %}
         </div>
     </div>
 

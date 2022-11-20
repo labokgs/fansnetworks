@@ -1,0 +1,159 @@
+{% load static %}
+<html>
+  <head>
+    <title>YOUR MAP</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <link href="{% static 'css/one-page-wonder.css' %}" rel="stylesheet" />
+    
+
+    
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      .my-div-style {
+        margin-top: 4rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+        <!-- Navigation-->
+        <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+            <div class="container px-5">
+                <a class="navbar-brand" href="{% url 'diary:index' %}">Mr.WALKER</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav me-auto">
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link {% block active_diary_list %}{% endblock%}" href="{% url 'diary:diary_list'%}">DIARY LIST</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'diary:map'%}">Under Construction</a>
+                        </li>
+
+                        {% endif %}
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item"><a class="nav-link {% block active_inquiry %}{% endblock %}" href="{% url 'diary:inquiry' %}">INQUIRY</a></li>
+                        {% if user.is_authenticated%}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'account_logout' %}">Log Out</a>
+                        </li>
+                        {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {% block active_signup %}{% endblock %}" href="{% url 'account_signup' %}">Sign Up</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% block active_login %}{% endblock %}" href="{% url 'account_login' %}">Log In</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+      </div>
+    <div id="map" class="my-div-style"></div>
+    <script>
+      var map;
+
+      /**
+       * The CenterControl adds a control to the map that recenters the map on
+       * Chicago.
+       * This constructor takes the control DIV as an argument.
+       * @constructor
+       */
+      function CenterControl(controlDiv, map) {
+
+        // Set CSS for the control border.
+        var controlUI = document.createElement('div');
+        controlUI.style.backgroundColor = '#fff';
+        controlUI.style.border = '2px solid #fff';
+        controlUI.style.borderRadius = '3px';
+        controlUI.style.boxShadow = '0 2px 6px rgba(0,0,0,.3)';
+        controlUI.style.cursor = 'pointer';
+        controlUI.style.marginBottom = '22px';
+        controlUI.style.textAlign = 'center';
+        controlUI.title = 'Click to recenter the map';
+        controlDiv.appendChild(controlUI);
+
+        // Set CSS for the control interior.
+        var controlText = document.createElement('div');
+        controlText.style.color = 'rgb(25,25,25)';
+        controlText.style.fontFamily = 'Roboto,Arial,sans-serif';
+        controlText.style.fontSize = '16px';
+        controlText.style.lineHeight = '38px';
+        controlText.style.paddingLeft = '5px';
+        controlText.style.paddingRight = '5px';
+        controlText.innerHTML = 'YOUR MAP';
+        controlUI.appendChild(controlText);
+
+        controlUI.addEventListener('click', function() {
+
+          var xhttp = new XMLHttpRequest();
+          xhttp.onreadystatechange = function() {
+               if (this.readyState == 4 && this.status == 200) {
+                 setMarker(JSON.parse(this.responseText));
+               }
+          };
+          xhttp.open("GET", "/api/customer/?format=json", true);
+          xhttp.setRequestHeader("Content-type", "application/json");
+          xhttp.send();
+
+        });
+
+      }
+
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 35.681236, lng: 139.767125},
+          zoom: 10
+        });
+
+        var centerControlDiv = document.createElement('div');
+        var centerControl = new CenterControl(centerControlDiv, map);
+
+        centerControlDiv.index = 1;
+        map.controls[google.maps.ControlPosition.TOP_CENTER].push(centerControlDiv);
+
+      }
+
+      function setMarker(customerJson) {
+
+        for(var i = 0; i < customerJson.length; i++){
+
+          var infowindow = new google.maps.InfoWindow({
+            content: customerJson[i].name + ' ' + customerJson[i].address
+          });
+
+          var marker = new google.maps.Marker({
+            position: {lat: Number(customerJson[i].lat), lng: Number(customerJson[i].lng)},
+            map: map
+          });
+
+          bindInfoWindow(marker, map, infowindow);
+        }
+      }
+
+      function bindInfoWindow(marker, map, infowindow) {
+        marker.addListener('click', function() {
+          infowindow.open(map, this);
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwlCe9vE2U-k9_czGDDOxlYGQCcrRiLgk&callback=initMap"
+    async defer></script>
+  </body>
+</html>
+
+

@@ -1,0 +1,87 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}日記一覧 | Mr.WALKER{% endblock %}
+
+{% block active_diary_list %}active{% endblock %}
+
+{% block head %}
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="{% static 'css/clean-blog.css' %}" rel="stylesheet">
+<link href="{% static 'css/blog-home.css' %}" rel="stylesheet">
+<link href="{% static 'css/mystyle.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block contents %}
+    <!-- Page content-->
+    <div class="container my-div-style">
+        <div class="row">
+            <!-- Blog entries-->
+            <div class="col-lg-8">
+                {% for diary in diary_list %}
+                    <div class="card mb-4">
+                        <a href="{% url 'diary:diary_detail' diary.pk %}"><img class="card-img-top" src="{{ diary.photo1.url }}"  /></a>
+                        <div class="card-body">
+                            <div class="small text-muted">{{ diary.created_at }}</div>
+                            <h2 class="card-title">{{ diary.title }}</h2>
+                            <p class="card-text">{{ diary.content|truncatechars:20  }}</p>
+                            <a class="btn btn-primary" href="{% url 'diary:diary_detail' diary.pk %}">Read more →</a>
+                        </div>
+                    </div>
+                    <hr class="my-4">
+                    {% empty %}
+                    <p>日記がありません</p>
+                {% endfor %}
+                <!-- Pagination-->
+                {% if is_paginated %}
+                    <ul class="pagination">
+                        {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+
+                        {% for page_num in page_obj.paginator.page_range %}
+                            {% if page_obj.number == page_num %}
+                            <li class="page-item active"><a class="page-link" href="#">{{page_num}}</a></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ page_num }}">{{ page_num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class-"page-link" href="?page={{ page_obj.next_page_number }}">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                {% endif %}
+            </div>
+            <!-- Side widgets-->
+            <div class="col-lg-4">
+                <!-- Search widget-->
+                <div class="card mb-4">
+                    <div class="card-header">Search</div>
+                    <div class="card-body">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Enter search term..." aria-label="Enter search term..." aria-describedby="button-search" />
+                            <button class="btn btn-primary" id="button-search" type="button">Go!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer-->
+    <footer class="py-5 bg-dark">
+        <div class="container"><p class="m-0 text-center text-white">Copyright &copy; Your Website 2022</p></div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="js/scripts.js"></script>
+{% endblock %}
